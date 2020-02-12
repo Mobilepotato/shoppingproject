@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.shopping.studydemo.DemoprojectApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 7.806 s - in com.shopping.studydemo.DemoprojectApplicationTests

@@ -1,0 +1,7 @@
+com\shopping\studydemo\DemoprojectApplication.class
+com\shopping\studydemo\config\service\TransactionManagementConfiguration.class
+com\shopping\studydemo\interceptor\DialectStatementHandlerInterceptor.class
+com\shopping\studydemo\config\dao\SessionFactoryConfiguration.class
+com\rr\gen\GenSql.class
+com\shopping\studydemo\util\UUIDUtil.class
+com\shopping\studydemo\config\dao\DataSourceConfiguration.class

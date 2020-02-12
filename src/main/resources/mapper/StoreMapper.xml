@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shopping.studydemo.dao.AdvertMapper">
+    <resultMap id="BaseResultMap" type="com.shopping.studydemo.entiy.Store">
+        <id property="storeId" column="store_id" jdbcType="VARCHAR"/>
+        <result property="storeName" column="store_name" jdbcType="VARCHAR"/>
+        <result property="storeLatitude" column="store_latitude" jdbcType="DOUBLE"/>
+        <result property="storeLongitude" column="store_longitude" jdbcType="DOUBLE"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="storeAddress" column="store_address" jdbcType="VARCHAR"/>
+        <result property="storeAdmin" column="store_admin" jdbcType="VARCHAR"/>
+        <result property="adminName" column="admin_name" jdbcType="VARCHAR"/>
+        <result property="adminPhone" column="admin_phone" jdbcType="VARCHAR"/>
+        <result property="storeLoginname" column="store_loginname" jdbcType="VARCHAR"/>
+        <result property="storePassword" column="store_password" jdbcType="VARCHAR"/>
+        <result property="creator" column="creator" jdbcType="VARCHAR"/>
+        <result property="phone" column="phone" jdbcType="VARCHAR"/>
+        <result property="state" column="state" jdbcType="VARCHAR"/>
+        <result property="isDisable" column="is_disable" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <insert id="addStore" parameterType="com.shopping.studydemo.entiy.Store">
+        INSERT INTO store (store_id,store_name,store_latitude,store_longitude,create_time,
+        store_address,store_admin,admin_name,admin_phone,store_loginname,
+        store_password,creator,phone,state,is_disable)
+        VALUE (#{storeId,jdbcType=VARCHAR},#{storeName,jdbcType=VARCHAR},#{storeLatitude,jdbcType=DOUBLE},#{storeLongitude,jdbcType=DOUBLE},
+        #{createTime，jdbcType=TIMESTAMP},#{storeAddress,jdbcType=VARCHAR},#{storeAdmin,jdbcType=VARCHAR},#{adminName,jdbcType=VARCHAR},#{adminPhone，jdbcType=VARCHAR},
+        #{storeLoginname,jdbcType=VARCHAR},#{storePassword,jdbcType=VARCHAR},#{creator,jdbcType=VARCHAR},#{phone,jdbcType=VARCHAR},#{state,jdbcType=VARCHAR},#{isDisable,jdbcType=VARCHAR})
+    </insert>
+
+    <select id="getAll" resultMap="BaseResultMap">
+        select * from store
+        where is_disable ='0'
+        <if test="storeName != null and storeName != ''" >
+            and store_name=#{storeId,jdbcType=VARCHAR}
+        </if>
+        <if test="storeLatitude != null and storeLatitude != ''">
+            and store_name=#{storeName,jdbcType=DOUBLE}
+        </if>
+        <if test="storeLongitude != null and storeLongitude != ''">
+            and store_longitude=#{storeLongitude,jdbcType=DOUBLE}
+        </if>
+        <if test="createTime != null and createTime != ''">
+            and create_time=#{createTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="storeAddress != null and storeAddress != ''">
+            and store_address=#{storeAddress,jdbcType=VARCHAR}
+        </if>
+        <if test="storeAdmin != null and storeAdmin != ''">
+            and store_admin=#{storeAdmin,jdbcType=VARCHAR}
+        </if>
+        <if test="adminName != null and adminName != ''">
+            and admin_name=#{adminName,jdbcType=VARCHAR}
+        </if>
+        <if test="adminPhone != null and adminPhone != ''">
+            and admin_phone=#{adminPhone,jdbcType=VARCHAR}
+        </if>
+        <if test="storeLoginname != null and storeLoginname != ''">
+            and store_loginname=#{storeLoginname,jdbcType=VARCHAR}
+        </if>
+        <if test="storePassword != null and storePassword != ''">
+            and store_password=#{storePassword,jdbcType=VARCHAR}
+        </if>
+        <if test="creator != null and creator != ''">
+            and creator=#{creator,jdbcType=VARCHAR}
+        </if>
+        <if test="phone != null and phone != ''">
+            and phone=#{phone,jdbcType=VARCHAR}
+        </if>
+        <if test="state != null and state != ''">
+            and state=#{state,jdbcType=VARCHAR}
+        </if>
+        <if test="isDisable != null and isDisable != ''">
+            and is_disable=#{isDisable,jdbcType=VARCHAR}
+        </if>
+        order by t.create_time desc
+    </select>
+
+</mapper>

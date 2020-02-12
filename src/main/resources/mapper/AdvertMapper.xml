@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shopping.studydemo.dao.AdvertMapper">
+<resultMap id="BaseResultMap" type="com.shopping.studydemo.entiy.Advert">
+    <id property="id" column="id" jdbcType="VARCHAR"/>
+    <result property="advertTitle" column="advert_title" jdbcType="VARCHAR"/>
+    <result property="advertImgUrl" column="advert_img_url" jdbcType="VARCHAR"/>
+    <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+    <result property="sortTime" column="sort_time" jdbcType="TIMESTAMP"/>
+    <result property="isDisable" column="is_disable" jdbcType="BIT"/>
+    <result property="advertUrl" column="advert_url" jdbcType="VARCHAR"/>
+</resultMap>
+    <insert id="insert" parameterType="com.shopping.studydemo.entiy.Advert">
+        insert into advert (id,advert_title,advert_img_url,create_time,sort_time,is_disable,advert_url)
+        value (#{id,jdbcType=VARCHAR},#{advertTitle,jdbcType=VARCHAR},#{advertImgUrl,jdbcType=VARCHAR},#{createTime,jdbcType=timestamp},
+        #{sortTime,jdbcType=timestamp},#{isDisable,jdbcType=BIT},#{advertUrl,jdbcType=VARCHAR})
+    </insert>
+    <select id="getAll" resultMap="BaseResultMap">
+    select * from advert t
+    where t.is_disable = '0'
+    <if test="advertTitle != null and advertTitle != ''">
+        and t.advert_title = #{advertTitle,jdbcType=VARCHAR}
+    </if>
+    <if test="advertImgUrl != null and advertImgUrl != ''">
+        and t.advert_img_url = #{advertImgUrl,jdbcType=VARCHAR}
+    </if>
+    <if test="createTime != null and createTime != ''">
+        and t.create_time = #{createTime,jdbcType=timestamp}
+    </if>
+    <if test="sortTime != null and sortTime != ''">
+        and t.sort_time = #{sortTime,jdbcType=timestamp}
+    </if>
+    <if test="isDisable != null and isDisable != ''">
+        and t.is_disable = #{isDisable,jdbcType=BIT}
+    </if>
+    <if test="advertUrl != null and advertUrl != ''">
+        and t.advert_url = #{advertUrl,jdbcType=VARCHAR}
+    </if>
+    order by t.sortTime desc,t.id desc
+</select>
+
+    <select id="getAdvertAppletsList" resultMap="BaseResultMap">
+        select * from advert t
+        where t.is_disable = '0'
+        <if test="advertTitle != null and advertTitle != ''">
+            and t.advert_title = #{advertTitle,jdbcType=VARCHAR}
+        </if>
+        <if test="advertImgUrl != null and advertImgUrl != ''">
+            and t.advert_img_url = #{advertImgUrl,jdbcType=VARCHAR}
+        </if>
+        <if test="createTime != null and createTime != ''">
+            and t.create_time = #{createTime,jdbcType=timestamp}
+        </if>
+        <if test="sortTime != null and sortTime != ''">
+            and t.sort_time = #{sortTime,jdbcType=timestamp}
+        </if>
+        <if test="isDisable != null and isDisable != ''">
+            and t.is_disable = #{isDisable,jdbcType=BIT}
+        </if>
+        <if test="advertUrl != null and advertUrl != ''">
+            and t.advert_url = #{advertUrl,jdbcType=VARCHAR}
+        </if>
+         order by t.sortTime desc,t.id desc  limit 0,3
+    </select>
+
+    <select id="countGetAll" parameterType="map" resultMap="BaseResultMap">
+        select count(1)
+        from advert t
+        where t.is_disable= '0'
+        <if test="advertTitle != null and advertTitle != ''">
+            and t.advert_title = #{advertTitle,jdbcType=VARCHAR}
+        </if>
+        <if test="advertImgUrl != null and advertImgUrl != ''">
+            and t.advert_img_url = #{advertImgUrl,jdbcType=VARCHAR}
+        </if>
+        <if test="createTime != null and createTime != ''">
+            and t.create_time = #{createTime,jdbcType=timestamp}
+        </if>
+        <if test="sortTime != null and sortTime != ''">
+            and t.sort_time = #{sortTime,jdbcType=timestamp}
+        </if>
+    </select>
+    <update id="deleteByPrimaryKey" parameterType="com.shopping.studydemo.entiy.Advert">
+    UPDATE  advert
+    SET is_disable='1'
+    WHERE id=#{id,jdbcType=VARCHAR}
+    </update>
+    <update id="editAdvert" parameterType="com.shopping.studydemo.entiy.Advert">
+        UPDATE advert
+        SET advert_title = #{advertTitle,jdbcType=VARCHAR},
+            advert_img_url = #{advertImgUrl,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=timestamp},
+            sort_time = #{sortTime,jdbcType=timestamp}
+        WHERE id=#{id,jdcType=VARCHAR}
+    </update>
+    <update id="sortAdvert" parameterType="com.shopping.studydemo.entiy.Advert">
+        UPDATE advert
+        SET sort_time=#{sortTime,jdbcType=timestamp}
+        WHERE id=#{id,jdbcType=VARCHAR}
+    </update>
+
+
+</mapper>

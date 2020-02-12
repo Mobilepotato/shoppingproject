@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shopping.studydemo.dao.CategoryMapper">
+    <resultMap id="BaseResultMap" type="com.shopping.studydemo.entiy.StoreCommodityCategory">
+        <id property="categoryId" column="category_id" jdbcType="VARCHAR"/>
+        <result property="categoryName" column="category_name" jdbcType="VARCHAR"/>
+        <result property="parentCategoryId" column="parent_category_id" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="creator" column="creator" jdbcType="VARCHAR"/>
+        <result property="isDisable" column="is_disable" jdbcType="VARCHAR"/>
+        <result property="sortTime" column="sort_time" jdbcType="TIMESTAMP"/>
+        <result property="isNavbar" column="is_navbar" jdbcType="VARCHAR"/>
+        <result property="imgUrl" column="img_url" jdbcType="VARCHAR"/>
+    </resultMap>
+    <insert id="insert" parameterType="com.shopping.studydemo.entiy.StoreCommodityCategory">
+        insert into storecommoditycategory (category_id,category_name,parent_category_id,create_time,sort_time,is_disable,creator,is_navbar,img_url)
+        value (#{categoryId,jdbcType=VARCHAR},#{categoryName,jdbcType=VARCHAR},#{parentCategoryId,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP},
+        #{sortTime,jdbcType=TIMESTAMP},#{isDisable,jdbcType=VARCHAR},#{creator,jdbcType=VARCHAR},#{isNavbar,jdbcType=VARCHAR}#{imgUrl,jdbcType=VARCHAR})
+    </insert>
+    <select id="getAll" resultMap="BaseResultMap">
+        select * from storecommoditycategory t
+        where t.is_disable = '0'
+        <if test="categoryName != null and categoryName != ''">
+            and t.category_name = #{categoryName,jdbcType=VARCHAR}
+        </if>
+        <if test="parentCategoryId != null and parentCategoryId != ''">
+            and t.parent_category_id = #{parentCategoryId,jdbcType=VARCHAR}
+        </if>
+        <if test="createTime != null and createTime != ''">
+            and t.create_time = #{createTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="sortTime != null and sortTime != ''">
+            and t.sort_time = #{sortTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="isDisable != null and isDisable != ''">
+            and t.is_disable = #{isDisable,jdbcType=VARCHAR}
+        </if>
+        <if test="creator != null and creator != ''">
+            and t.creator = #{creator,jdbcType=VARCHAR}
+        </if>
+        <if test="isNavbar != null and isNavbar != ''">
+            and t.is_navbar = #{isNavbar,jdbcType=VARCHAR}
+        </if>
+        <if test="imgUrl != null and imgUrl != ''">
+            and t.img_url = #{imgUrl,jdbcType=VARCHAR}
+        </if>
+        order by t.sortTime desc,t.id desc
+    </select>
+    <select id="countGetAll" parameterType="map" resultMap="BaseResultMap">
+        select count(1)
+        from storecommoditycategory t
+        where t.is_disable= '0'
+        <if test="categoryName != null and categoryName != ''">
+            and t.category_name = #{categoryName,jdbcType=VARCHAR}
+        </if>
+        <if test="categoryId != null and categoryId != ''">
+            and t.category_id = #{categoryId,jdbcType=VARCHAR}
+        </if>
+        <if test="imgUrl != null and imgUrl != ''">
+            and t.img_url = #{imgUrl,jdbcType=VARCHAR}
+        </if>
+        <if test="parentCategoryId != null and parentCategoryId != ''">
+            and t.parent_category_id = #{parentCategoryId,jdbcType=VARCHAR}
+        </if>
+        <if test="sortTime != null and sortTime != ''">
+            and t.sort_time = #{sortTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="isNavbar != null and isNavbar != ''">
+            and t.is_navbar = #{isNavbar,jdbcType=TIMESTAMP}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultType="com.shopping.studydemo.entiy.StoreCommodityCategory">
+        select
+        category_id,category_name,parent_category_id,create_time,,creator,is_disable,sort_time,is_navbar,img_url
+        from storecommoditycategory
+        where category_id = #{categoryId,jdbcType=VARCHAR}
+        and is_disable = '0'
+    </select>
+    <update id="deleteByPrimaryKey" parameterType="com.shopping.studydemo.entiy.StoreCommodityCategory">
+        UPDATE  storecommoditycategory
+        SET is_disable='1'
+        WHERE category_id=#{categoryId,jdbcType=VARCHAR}
+    </update>
+    <update id="editAdvert" parameterType="com.shopping.studydemo.entiy.StoreCommodityCategory">
+        UPDATE storecommoditycategory
+        SET category_name = #{advertTitle,jdbcType=VARCHAR},
+            imgUrl = #{advertImgUrl,jdbcType=VARCHAR},
+            parentCategoryId = #{createTime,jdbcType=TIMESTAMP},
+            sort_time = #{sortTime,jdbcType=TIMESTAMP},
+            isNavbar=#{is_navbar,jdbcType=VARCHAR}
+        WHERE category_id=#{categoryId,jdcType=VARCHAR}
+    </update>
+    <update id="sortCategory" parameterType="com.shopping.studydemo.entiy.StoreCommodityCategory">
+        UPDATE storecommoditycategory
+        SET sort_time=#{sortTime,jdbcType=timestamp}
+        WHERE category_id=#{category_id,jdbcType=VARCHAR}
+    </update>
+
+
+</mapper>
